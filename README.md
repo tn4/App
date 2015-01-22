@@ -1,2 +1,8 @@
 # App
-// SignIn need 2 file to run the app. The file must be a notepad file, one must be name "students", and one must be name "times". When the two file is made and the application find the file, it should run smoothly. The student file must only contain students name, Last name first then first name second. ONE student on each line. For the times file, leave it blank. The app will automaticlly write the number of milisec the student have log onto the app. To convert it to hours, simply divided by 360,000. 
+Need 2 file made in the same directory as the running file.
+-students.txt
+-times.txt
+
+Logs- contains the code that record every movement of the user and record it in log.txt, still being made.
+dataframe - contains the code that allow the user to see the amount of hour each students has done
+signin - contains the code that does everything. The user must select a student and sign in, and sign out, and pressed record to actually have the hour recorded in the times.txt

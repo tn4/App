@@ -19,33 +19,44 @@ public class SigningIn extends javax.swing.JFrame
     public SigningIn() throws FileNotFoundException 
     {
         initComponents();
+        //READ THE STUDENTS NAME FROM THE STUDENTS.TXT
         Scanner file = new Scanner(new File(students));
         while(file.hasNextLine())
         {
+            //ADD IT TO THE MODEL 
             list1.addElement(file.nextLine());
 	}
-
+	//SET LIST TO THE STUDENTS LIST 
         jList1.setModel(list1);
+        //ARRAYS
         signin = new double[list1.getSize()];
         signout = new double[list1.getSize()];
         timedone = new double[list1.getSize()];
+        //LOGPRESET, READ THE DATA FROM THE PRE-EXISTING FILE
         LogData();
+        //TIMEPRESET, READ THE DATA FROM THE PRE-EXISTING FILE
         PresetTime();
     }
     public void LogData()
     {
+    	//SET THE FRAME OF THE LOG VISIBLE
         datas.setVisible(true);
     }
     public void AddToLog(Double data)
     {
+    	//ADD A DATA TO THE MODEL ARRAY, A DOUBLE
         event.addElement(data);
+        //REFRESH THE DATA
         datas.jList1.setModel(event);
     }
     public void AddToLog(String data)
     {
+    	//ADD A DATA TO THE MODEL ARRAY, A STRING
         event.addElement(data);
+        //REFRESH THE DATA
         datas.jList1.setModel(event);
     }
+    //READ THE EXISTING FILE DATA AND RECORD IT TO THE LIST
     public void PresetTime() throws FileNotFoundException
     {
         int spot = 0;
@@ -56,7 +67,6 @@ public class SigningIn extends javax.swing.JFrame
             AddToLog(timedone[spot]);
             spot++;
         }
-
     }
     private void initComponents() 
     {
@@ -158,10 +168,12 @@ public class SigningIn extends javax.swing.JFrame
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) 
     {
+    	//CHECK IF THE SELECTED VALUE IS EXISTING
         for(int i =0; i < list2.getSize();i++)
         {
             check = (jList1.getSelectedValue()).equals(list2.get(i));
         }
+        //IF IT DOESN'T EXIST
         if (check == false)
         {
             list2.addElement(jList1.getSelectedValue());
@@ -169,6 +181,7 @@ public class SigningIn extends javax.swing.JFrame
             signin[list1.indexOf(jList1.getSelectedValue())] = (double) System.currentTimeMillis();
             AddToLog("Signed in " + jList1.getSelectedValue()+ " " + signin[list1.indexOf(jList1.getSelectedValue())]);
         }
+        //IF IT EXIST ALREADY
         else
         {
             JOptionPane.showMessageDialog(message_frame,"You have already signed in");
@@ -177,6 +190,7 @@ public class SigningIn extends javax.swing.JFrame
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) 
     {
+    	//READ THE EXISTING TIME FILE
        	try
         {
             thefile = new Formatter(times);
@@ -186,13 +200,15 @@ public class SigningIn extends javax.swing.JFrame
 
             Logger.getLogger(SigningIn.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        //ADD THE EXISTING DATA TO THE TIMEDONE VARIABLE
         for(int i = 0; i < list2.getSize();i++)
         {
             timedone[list1.indexOf(list2.getElementAt(i))] = System.currentTimeMillis();
         }
+        //CLEAR THE LSIT
         list2.clear();
         jList2.setModel(list2);
+        //DO THE MATH
         for(int i = 0; i < list1.getSize();i++)
         {
             timedone[i] = timedone[i]+(signout[i] - signin[i]);
@@ -204,12 +220,12 @@ public class SigningIn extends javax.swing.JFrame
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) throws FileNotFoundException
     {
-       
+       //SET THE FRAME, AND VISIBLE
         DataFrame frame = new DataFrame();
         frame.setVisible(true);
         frame.enableInputMethods(false);
         frame.jList1.setModel(list1);
-
+	//DIVIDE THE MILISEC INTO HOURS
         for(int i = 0; i < timedone.length;i++)
         {
             list3.addElement(timedone[i]/3600000);

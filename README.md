@@ -1,2 +1,2 @@
 # App
-Stuff
+// SignIn need 2 file to run the app. The file must be a notepad file, one must be name "students", and one must be name "times". When the two file is made and the application find the file, it should run smoothly. The student file must only contain students name, Last name first then first name second. ONE student on each line. For the times file, leave it blank. The app will automaticlly write the number of milisec the student have log onto the app. To convert it to hours, simply divided by 360,000. 

@@ -1,0 +1,27 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package javaapplication1;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+/**
+ *
+ * @author s632318
+ */
+public class Mouse 
+{
+    public void MoveMouse(int x, int y, int offset) throws AWTException
+    {
+        Robot robot = new Robot();
+        robot.mouseMove(x+offset,y+offset);
+    }
+
+
+}

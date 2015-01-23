@@ -1,0 +1,42 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package javaapplication1;
+
+import java.awt.AWTException;
+import java.awt.MouseInfo;
+import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+
+/**
+ *
+ * @author s632318
+ */
+public class Main
+{
+     public static void main(String args[]) throws FileNotFoundException, AWTException
+    {
+        SigningIn test = new SigningIn();
+        Mouse mouse = new Mouse();
+       
+        double i = System.currentTimeMillis();
+        
+        test.setVisible(true);
+        while(test.checks())
+        {
+            //System.out.println(MouseInfo.getPointerInfo().getLocation().getX() +","+MouseInfo.getPointerInfo().getLocation().getY());
+            if(System.currentTimeMillis() > i+5000)
+            {
+                System.out.println("MOVED");
+                //mouse.MoveMouse(MouseInfo.getPointerInfo().getLocation().getX())),MouseInfo.getPointerInfo().getLocation().getX())),1);
+                int x = (int) MouseInfo.getPointerInfo().getLocation().getX();
+                int y = (int) MouseInfo.getPointerInfo().getLocation().getY();
+                mouse.MoveMouse(x,y,1);
+                i = System.currentTimeMillis();
+            }
+        }
+
+    }
+}

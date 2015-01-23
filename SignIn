@@ -13,50 +13,39 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class SigningIn extends javax.swing.JFrame 
+public class SigningIn extends javax.swing.JFrame
 {
 
-    public SigningIn() throws FileNotFoundException 
+    public SigningIn() throws FileNotFoundException
     {
         initComponents();
-        //READ THE STUDENTS NAME FROM THE STUDENTS.TXT
         Scanner file = new Scanner(new File(students));
         while(file.hasNextLine())
         {
-            //ADD IT TO THE MODEL 
             list1.addElement(file.nextLine());
 	}
-	//SET LIST TO THE STUDENTS LIST 
+
         jList1.setModel(list1);
-        //ARRAYS
         signin = new double[list1.getSize()];
         signout = new double[list1.getSize()];
         timedone = new double[list1.getSize()];
-        //LOGPRESET, READ THE DATA FROM THE PRE-EXISTING FILE
         LogData();
-        //TIMEPRESET, READ THE DATA FROM THE PRE-EXISTING FILE
         PresetTime();
     }
     public void LogData()
     {
-    	//SET THE FRAME OF THE LOG VISIBLE
         datas.setVisible(true);
     }
     public void AddToLog(Double data)
     {
-    	//ADD A DATA TO THE MODEL ARRAY, A DOUBLE
         event.addElement(data);
-        //REFRESH THE DATA
         datas.jList1.setModel(event);
     }
     public void AddToLog(String data)
     {
-    	//ADD A DATA TO THE MODEL ARRAY, A STRING
         event.addElement(data);
-        //REFRESH THE DATA
         datas.jList1.setModel(event);
     }
-    //READ THE EXISTING FILE DATA AND RECORD IT TO THE LIST
     public void PresetTime() throws FileNotFoundException
     {
         int spot = 0;
@@ -67,8 +56,9 @@ public class SigningIn extends javax.swing.JFrame
             AddToLog(timedone[spot]);
             spot++;
         }
+
     }
-    private void initComponents() 
+    private void initComponents()
     {
 
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -159,21 +149,19 @@ public class SigningIn extends javax.swing.JFrame
         pack();
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
     {
         signout[list1.indexOf(jList2.getSelectedValue())] = (double) System.currentTimeMillis();
         AddToLog("Signed out " + jList2.getSelectedValue()+ " " + signout[list1.indexOf(jList2.getSelectedValue())]);
         list2.removeElement(jList2.getSelectedValue());
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
     {
-    	//CHECK IF THE SELECTED VALUE IS EXISTING
         for(int i =0; i < list2.getSize();i++)
         {
             check = (jList1.getSelectedValue()).equals(list2.get(i));
         }
-        //IF IT DOESN'T EXIST
         if (check == false)
         {
             list2.addElement(jList1.getSelectedValue());
@@ -181,16 +169,14 @@ public class SigningIn extends javax.swing.JFrame
             signin[list1.indexOf(jList1.getSelectedValue())] = (double) System.currentTimeMillis();
             AddToLog("Signed in " + jList1.getSelectedValue()+ " " + signin[list1.indexOf(jList1.getSelectedValue())]);
         }
-        //IF IT EXIST ALREADY
         else
         {
             JOptionPane.showMessageDialog(message_frame,"You have already signed in");
         }
 
     }
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)
     {
-    	//READ THE EXISTING TIME FILE
        	try
         {
             thefile = new Formatter(times);
@@ -200,32 +186,43 @@ public class SigningIn extends javax.swing.JFrame
 
             Logger.getLogger(SigningIn.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //ADD THE EXISTING DATA TO THE TIMEDONE VARIABLE
-        for(int i = 0; i < list2.getSize();i++)
+        /*
+        for(int i = 0 ; i < list2.getSize();i++)
         {
-            timedone[list1.indexOf(list2.getElementAt(i))] = System.currentTimeMillis();
+            signout[list1.indexOf(] = (double) System.currentTimeMillis();
         }
-        //CLEAR THE LSIT
+         * 
+         */
         list2.clear();
         jList2.setModel(list2);
-        //DO THE MATH
         for(int i = 0; i < list1.getSize();i++)
         {
             timedone[i] = timedone[i]+(signout[i] - signin[i]);
             AddToLog(list1.getElementAt(i)+ " signed = " + signin[i] + " , signout = " + signout[i]+ " , time done = " + timedone[i] );
             thefile.format("%s \n",timedone[i]);
         }
+        for(int i = 0; i < signin.length;i++)
+        {
+            signin[i] = 0;
+        }
+        for(int i = 0; i < signout.length;i++)
+        {
+            signout[i] = 0 ; 
+        }
         thefile.close();
-    }
-
+       }
+       public boolean checks()
+       {
+        return true;
+       }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) throws FileNotFoundException
     {
-       //SET THE FRAME, AND VISIBLE
+
         DataFrame frame = new DataFrame();
         frame.setVisible(true);
         frame.enableInputMethods(false);
         frame.jList1.setModel(list1);
-	//DIVIDE THE MILISEC INTO HOURS
+
         for(int i = 0; i < timedone.length;i++)
         {
             list3.addElement(timedone[i]/3600000);
@@ -237,7 +234,7 @@ public class SigningIn extends javax.swing.JFrame
 
     }
 
-   
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -266,7 +263,7 @@ public class SigningIn extends javax.swing.JFrame
         });
     }
 
-    // Variables declaration 
+    // Variables declaration
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -278,7 +275,7 @@ public class SigningIn extends javax.swing.JFrame
     // End of variables declaration
     String times = "times.txt";
     String students = "students.txt";
-    
+
     DefaultListModel list1 = new DefaultListModel();
     DefaultListModel list2 = new DefaultListModel();
     DefaultListModel list3 = new DefaultListModel();
@@ -286,12 +283,13 @@ public class SigningIn extends javax.swing.JFrame
     JFrame message_frame = new JFrame();
     Formatter thefile = null;
     Logs datas = new Logs();
-    
+
 
     double[] signin;
     double[] signout;
     double[] timedone;
     int slot =0;
     boolean check = false;
+    boolean visible = false;
 
 }
